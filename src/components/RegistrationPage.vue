@@ -2,18 +2,19 @@
   <div class="container">
     <div class="card">
       <div class="card-body jumbotron">
-        <h1 class="display-4">แบบฟอร์มลงทะเบียนผู้ป่วยใหม่ โรงพยาบาลธรรมศาสตร์เฉลิมพระเกียรติ</h1>
-        <p class="lead">โปรดกรอกข้อความ</p>
-      </div>
-      <PatientProfileSection class="card-body"></PatientProfileSection>
+        <h1>แบบฟอร์มลงทะเบียนผู้ป่วยใหม่ โรงพยาบาลธรรมศาสตร์เฉลิมพระเกียรติ</h1>
+        <h1 class="lead">โปรดกรอกข้อความ</h1>
+        <p>ข้อมูลผู้ป่วย</p>
+      
+      <PatientProfileSection class="card-body"></PatientProfileSection></div>
 
       <div class="card">
-      <h2 class="display-4">ผู้ติดต่อได้กรณีฉุกเฉิน</h2>
+      <p>ผู้ติดต่อได้กรณีฉุกเฉิน</p>
       <EmergencyContactSection></EmergencyContactSection>
       </div>
 
       <div class="card">
-      <h2 class="display-4">ประวัติการแพ้ยา</h2>
+      <p class="display-4">ประวัติการแพ้ยา</p>
       <AllergyInfoSection></AllergyInfoSection>
       </div>
       
@@ -38,7 +39,22 @@ export default {
 };
 </script>
 
+<style>
+body {
+  background-color: lightblue;
+}
 
+h1 {
+  color: darkblue;
+  text-align: center;
+  font-size: 30px;
+}
+
+p {
+  color: blue;
+  font-size: 20px;
+}
+</style>
 
 
 
