@@ -6,12 +6,12 @@
       type="is-danger"
       message="(ใส่เฉพาะตัวเลข 0-9 เท่านั้น)"
     >
-      <b-input v-model="patientInfo.IDcard"></b-input>
+      <b-input @input="fireChanges" v-model="patientInfo.IDcard"></b-input>
     </b-field>
 
     <b-field grouped>
       <b-field label="คำนำหน้า">
-        <b-select v-model="patientInfo.prefix">
+        <b-select @input="fireChanges" v-model="patientInfo.prefix">
           <option>ด.ช.</option>
           <option>ด.ญ.</option>
           <option>นาย</option>
@@ -25,17 +25,18 @@
       </b-field>
 
       <b-field label="ชื่อ" expanded>
-        <b-input v-model="patientInfo.firstName"></b-input>
+        <b-input  @input="fireChanges" v-model="patientInfo.firstName"></b-input>
       </b-field>
 
       <b-field label="นามสกุล" expanded>
-        <b-input v-model="patientInfo.lastName"></b-input>
+        <b-input  @input="fireChanges" v-model="patientInfo.lastName"></b-input>
       </b-field>
     </b-field>
 
     <b-field grouped>
-      <b-field label="วัน/เดือน/ปีเกิด">
-        <b-datepicker
+      <b-field label="วัน/เดือน/ปีเกิด" expanded >
+        <b-datepicker 
+          @input="fireChanges"
           v-model="patientInfo.birthday"
           placeholder="คลิกเลือก"
           icon="calendar-today"
@@ -43,8 +44,8 @@
         ></b-datepicker>
       </b-field>
 
-      <b-field label="ศาสนา">
-        <b-select v-model="patientInfo.religious">
+      <b-field label="ศาสนา" expanded >
+        <b-select @input="fireChanges" v-model="patientInfo.religious">
           <option>พุทธ</option>
           <option>อิสลาม</option>
           <option>คริสต์</option>
@@ -55,70 +56,70 @@
         </b-select>
       </b-field>
 
-      <b-field label="สัญชาติ">
-        <b-input v-model="patientInfo.nationality" placeholder="สัญชาติ" rounded></b-input>
+      <b-field label="สัญชาติ" expanded >
+        <b-input @input="fireChanges" v-model="patientInfo.nationality" placeholder="สัญชาติ" rounded></b-input>
       </b-field>
 
-      <b-field label="เชื้อชาติ">
-        <b-input v-model="patientInfo.ethnicity" placeholder="เชื้อชาติ" rounded></b-input>
+      <b-field label="เชื้อชาติ" expanded >
+        <b-input @input="fireChanges" v-model="patientInfo.ethnicity" placeholder="เชื้อชาติ" rounded></b-input>
       </b-field>
     </b-field>
 
     <b-field grouped>
-      <b-field label="เพศ">
-        <b-radio v-model="patientInfo.sex" native-value="ชาย">ชาย</b-radio>
-        <b-radio v-model="patientInfo.sex" native-value="หญิง">หญิง</b-radio>
+      <b-field label="เพศ" expanded>
+        <b-radio @input="fireChanges" v-model="patientInfo.sex" native-value="ชาย">ชาย</b-radio>
+        <b-radio @input="fireChanges" v-model="patientInfo.sex" native-value="หญิง">หญิง</b-radio>
       </b-field>
 
-      <b-field label="อาชีพ">
-        <b-input v-model="patientInfo.occupation"></b-input>
+      <b-field label="อาชีพ" expanded>
+        <b-input @input="fireChanges" v-model="patientInfo.occupation"></b-input>
       </b-field>
     </b-field>
 
     <b-field grouped>
       <b-field label="สถานภาพ" expanded>
-        <b-radio v-model="patientInfo.status" native-value="โสด">โสด</b-radio>
-        <b-radio v-model="patientInfo.status" native-value="สมรส">สมรส</b-radio>
-        <b-radio v-model="patientInfo.status" native-value="หย่า">หย่า</b-radio>
-        <b-radio v-model="patientInfo.status" native-value="แยกกันอยู่">แยกกันอยู่</b-radio>
-        <b-radio v-model="patientInfo.status" native-value="หม้าย">หม้าย</b-radio>
-        <b-radio v-model="patientInfo.status" native-value="นักบวช">นักบวช</b-radio>
+        <b-radio @input="fireChanges" v-model="patientInfo.status" native-value="โสด">โสด</b-radio>
+        <b-radio @input="fireChanges"  v-model="patientInfo.status" native-value="สมรส">สมรส</b-radio>
+        <b-radio @input="fireChanges"  v-model="patientInfo.status" native-value="หย่า">หย่า</b-radio>
+        <b-radio @input="fireChanges"  v-model="patientInfo.status" native-value="แยกกันอยู่">แยกกันอยู่</b-radio>
+        <b-radio @input="fireChanges"  v-model="patientInfo.status" native-value="หม้าย">หม้าย</b-radio>
+        <b-radio @input="fireChanges"  v-model="patientInfo.status" native-value="นักบวช">นักบวช</b-radio>
       </b-field>
     </b-field>
 
     <b-field grouped>
-      <b-field label="หมู่เลือด">
-        <b-radio v-model="patientInfo.bloodgroup" native-value="A">A</b-radio>
-        <b-radio v-model="patientInfo.bloodgroup" native-value="B">B</b-radio>
-        <b-radio v-model="patientInfo.bloodgroup" native-value="O">O</b-radio>
-        <b-radio v-model="patientInfo.bloodgroup" native-value="AB">AB</b-radio>
-        <b-radio v-model="patientInfo.bloodgroup" native-value="อื่นๆ">อื่นๆ</b-radio>
+      <b-field label="หมู่เลือด" expanded> 
+        <b-radio  @input="fireChanges"  v-model="patientInfo.bloodgroup" native-value="A">A</b-radio>
+        <b-radio  @input="fireChanges" v-model="patientInfo.bloodgroup" native-value="B">B</b-radio>
+        <b-radio  @input="fireChanges" v-model="patientInfo.bloodgroup" native-value="O">O</b-radio>
+        <b-radio  @input="fireChanges" v-model="patientInfo.bloodgroup" native-value="AB">AB</b-radio>
+        <b-radio  @input="fireChanges" v-model="patientInfo.bloodgroup" native-value="อื่นๆ">อื่นๆ</b-radio>
       </b-field>
     </b-field>
 
     <b-field grouped>
       <b-field label="อาการเบื้องต้น" expanded>
-        <b-input v-model="patientInfo.symptoms"></b-input>
+        <b-input  @input="fireChanges" v-model="patientInfo.symptoms"></b-input>
       </b-field>
     </b-field>
 
     <b-field grouped>
-      <b-field label="บ้านเลขที่">
-        <b-input v-model="patientInfo.housenumber"></b-input>
+      <b-field label="บ้านเลขที่" expanded>
+        <b-input  @input="fireChanges" v-model="patientInfo.housenumber"></b-input>
       </b-field>
-      <b-field label="หมู่">
-        <b-input v-model="patientInfo.moo"></b-input>
+      <b-field label="หมู่" expanded>
+        <b-input  @input="fireChanges" v-model="patientInfo.moo"></b-input>
       </b-field>
     
-      <b-field label="ตำบล">
-        <b-input v-model="patientInfo.tambon"></b-input>
+      <b-field label="ตำบล" expanded>
+        <b-input  @input="fireChanges" v-model="patientInfo.tambon"></b-input>
       </b-field>
-      <b-field label="อำเภอ">
-        <b-input v-model="patientInfo.district"></b-input>
+      <b-field label="อำเภอ" expanded>
+        <b-input  @input="fireChanges" v-model="patientInfo.district"></b-input>
       </b-field>
 
-      <b-field label="จังหวัด">
-        <b-select v-model="patientInfo.city" placeholder="โปรดเลือก">
+      <b-field label="จังหวัด" expanded>
+        <b-select  @input="fireChanges" v-model="patientInfo.city" placeholder="โปรดเลือก">
           <option
             v-for="city in cityList "
             v-bind:key="city.id"
@@ -129,68 +130,68 @@
     </b-field>
 
     <b-field grouped>
-      <b-field label="โทรศัพท์" type="is-danger" message="(ใส่เฉพาะตัวเลข 0-9 เท่านั้น)">
-        <b-input v-model="patientInfo.phone"></b-input>
+      <b-field label="โทรศัพท์" expanded type="is-danger" message="(ใส่เฉพาะตัวเลข 0-9 เท่านั้น)">
+        <b-input  @input="fireChanges" v-model="patientInfo.phone"></b-input>
       </b-field>
-      <b-field label="อีเมล์">
-        <b-input v-model="patientInfo.email"></b-input>
+      <b-field label="อีเมล์" expanded>
+        <b-input  @input="fireChanges" v-model="patientInfo.email"></b-input>
       </b-field>
     </b-field>
 
     <b-field grouped>
       <b-field label="ชื่อบิดา" expanded>
-        <b-input v-model="patientInfo.fatherfirstName"></b-input>
+        <b-input  @input="fireChanges" v-model="patientInfo.fatherfirstName"></b-input>
       </b-field>
 
       <b-field label="นามสกุลบิดา" expanded>
-        <b-input v-model="patientInfo.fatherlastName"></b-input>
+        <b-input  @input="fireChanges" v-model="patientInfo.fatherlastName"></b-input>
       </b-field>
     </b-field>
 
     <b-field grouped>
       <b-field label="ชื่อมารดา" expanded>
-        <b-input v-model="patientInfo.motherfirstName"></b-input>
+        <b-input  @input="fireChanges" v-model="patientInfo.motherfirstName"></b-input>
       </b-field>
 
       <b-field label="นามสกุลมารดา" expanded>
-        <b-input v-model="patientInfo.motherlastName"></b-input>
+        <b-input  @input="fireChanges" v-model="patientInfo.motherlastName"></b-input>
       </b-field>
     </b-field>
 
-    <p>{{patientInfo}}</p>
+    
   </section>
 </template>
 
 <script>
 export default {
-  data() {
+  props: ["value"],
+  data: function(){
     return {
       patientInfo: {
-        IDcard: "",
-        prefix: "",
-        firstName: "",
-        lastName: "",
-        birthday: "",
-        religious: "",
-        nationality: "",
-        ethnicity: "",
-        sex: "",
-        occupation: "",
-        status: "",
-        bloodgroup: "",
-        symptoms: "",
-        housenumber: "",
-        moo: "",
-        phone: "",
-        email: "",
-        fatherfirstName: "",
-        fatherlastName: "",
-        motherfirstName: "",
-        motherlastName: "",
-
-        tambon: "",
-        district: "",
-        city: ""
+        IDcard: this.value.IDcard,
+        prefix: this.value.prefix,
+        firstName: this.value.firstName,
+        lastName: this.value.lastName,
+        birthday: this.value.birthday,
+        religious: this.value.religious,
+        nationality: this.value.nationality,
+        ethnicity: this.value.ethnicity,
+        sex: this.value.sex,
+        occupation: this.value.occupation,
+        status: this.value.status,
+        bloodgroup: this.value.bloodgroup,
+        symptoms: this.value.symptoms,
+        housenumber: this.value.housenumber,
+        moo: this.value.moo,
+        phone: this.value.phone,
+        email: this.value.email,
+        fatherfirstName: this.value.fatherfirstName,
+        fatherlastName: this.value.fatherlastName,
+        motherfirstName: this.value.motherfirstName,
+        motherlastName: this.value.motherlastName,
+        tambon: this.value.tambon,
+        district: this.value.district,
+        city: this.value.city
       },
 
       cityList: [
@@ -274,6 +275,36 @@ export default {
       ]
     };
   },
+  methods: {
+    fireChanges() {
+      this.$emit("input", {
+        IDcard: this.patientInfo.IDcard,
+        prefix: this.patientInfo.prefix,
+        firstName: this.patientInfo.firstName,
+        lastName: this.patientInfo.lastName,
+        birthday: this.patientInfo.birthday,
+        religious: this.patientInfo.religious,
+        nationality: this.patientInfo.nationality,
+        ethnicity: this.patientInfo.ethnicity,
+        sex: this.patientInfo.sex,
+        occupation: this.patientInfo.occupation,
+        status: this.patientInfo.status,
+        bloodgroup: this.patientInfo.bloodgroup,
+        symptoms: this.patientInfo.symptoms,
+        housenumber: this.patientInfo.housenumber,
+        moo: this.patientInfo.moo,
+        phone: this.patientInfo.phone,
+        email: this.patientInfo.email,
+        fatherfirstName: this.patientInfo.fatherfirstName,
+        fatherlastName: this.patientInfo.fatherlastName,
+        motherfirstName: this.patientInfo.motherfirstName,
+        motherlastName: this.patientInfo.motherlastName,
+        tambon: this.patientInfo.tambon,
+        district: this.patientInfo.district,
+        city: this.patientInfo.city
+      });
+    }
+  }
   
 };
 </script>

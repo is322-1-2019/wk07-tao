@@ -1,8 +1,8 @@
 <template>
   <section>
     <b-field grouped>
-      <b-field label="คำนำหน้า">
-        <b-select v-model="emergencyInfo.prefix">
+      <b-field label="คำนำหน้า" expanded>
+        <b-select  @input="fireChanges" v-model="emergencyInfo.prefix1">
           <option>ด.ช.</option>
           <option>ด.ญ.</option>
           <option>นาย</option>
@@ -16,49 +16,49 @@
       </b-field>
 
       <b-field label="ชื่อ" expanded>
-        <b-input v-model="emergencyInfo.firstName"></b-input>
+        <b-input @input="fireChanges" v-model="emergencyInfo.firstName1"></b-input>
       </b-field>
 
       <b-field label="นามสกุล" expanded>
-        <b-input v-model="emergencyInfo.lastName"></b-input>
+        <b-input @input="fireChanges" v-model="emergencyInfo.lastName1"></b-input>
       </b-field>
     </b-field>
 
     <b-field grouped>
-      <b-field label="บ้านเลขที่">
-        <b-input v-model="emergencyInfo.housenumber"></b-input>
+      <b-field label="บ้านเลขที่" expanded>
+        <b-input @input="fireChanges" v-model="emergencyInfo.housenumber1"></b-input>
       </b-field>
-      <b-field label="หมู่">
-        <b-input v-model="emergencyInfo.moo"></b-input>
-      </b-field>
-
-      <b-field label="ตำบล">
-        <b-input v-model="emergencyInfo.tambon"></b-input>
-      </b-field>
-      <b-field label="อำเภอ">
-        <b-input v-model="emergencyInfo.district"></b-input>
+      <b-field label="หมู่" expanded>
+        <b-input  @input="fireChanges" v-model="emergencyInfo.moo1"></b-input>
       </b-field>
 
-      <b-field label="จังหวัด">
-        <b-select v-model="emergencyInfo.city" placeholder="โปรดเลือก">
-          <option
-            v-for="city in cityList "
-            v-bind:key="city.id"
-            v-bind:value="city.name"
-          >{{ city.name }}</option>
+      <b-field label="ตำบล" expanded>
+        <b-input @input="fireChanges" v-model="emergencyInfo.tambon1"></b-input>
+      </b-field>
+      <b-field label="อำเภอ" expanded>
+        <b-input @input="fireChanges" v-model="emergencyInfo.district1"></b-input>
+      </b-field>
+
+      <b-field label="จังหวัด" expanded>
+        <b-select @input="fireChanges" v-model="emergencyInfo.city1" placeholder="โปรดเลือก">
+          <option 
+            v-for="city1 in city1List "
+            v-bind:key="city1.id"
+            v-bind:value="city1.name"
+          >{{ city1.name }}</option>
         </b-select>
       </b-field>
     </b-field>
 
     <b-field grouped>
-      <b-field label="ผู้ติดต่อได้เกี่ยวข้องเป็น">
-        <b-radio v-model="emergencyInfo.relationship" native-value="บิดา">บิดา</b-radio>
-        <b-radio v-model="emergencyInfo.relationship" native-value="มารดา">มารดา</b-radio>
-        <b-radio v-model="emergencyInfo.relationship" native-value="สามี">สามี</b-radio>
-        <b-radio v-model="emergencyInfo.relationship" native-value="ภรรยา">ภรรยา</b-radio>
-        <b-radio v-model="emergencyInfo.relationship" native-value="ญาติ">ญาติ</b-radio>
-        <b-radio v-model="emergencyInfo.relationship" native-value="บุตร">บุตร</b-radio>
-        <b-radio v-model="emergencyInfo.relationship" native-value="อื่นๆ">อื่นๆ</b-radio>
+      <b-field label="ผู้ติดต่อได้เกี่ยวข้องเป็น" expanded>
+        <b-radio @input="fireChanges" v-model="emergencyInfo.relationship1" native-value="บิดา">บิดา</b-radio>
+        <b-radio @input="fireChanges" v-model="emergencyInfo.relationship1" native-value="มารดา">มารดา</b-radio>
+        <b-radio @input="fireChanges" v-model="emergencyInfo.relationship1" native-value="สามี">สามี</b-radio>
+        <b-radio @input="fireChanges" v-model="emergencyInfo.relationship1" native-value="ภรรยา">ภรรยา</b-radio>
+        <b-radio @input="fireChanges" v-model="emergencyInfo.relationship1" native-value="ญาติ">ญาติ</b-radio>
+        <b-radio @input="fireChanges" v-model="emergencyInfo.relationship1" native-value="บุตร">บุตร</b-radio>
+        <b-radio @input="fireChanges" v-model="emergencyInfo.relationship1" native-value="อื่นๆ">อื่นๆ</b-radio>
       </b-field>
     </b-field>
   </section>
@@ -67,20 +67,21 @@
 
 <script>
 export default {
+  props: ["value"],
   data: function() {
     return {
       emergencyInfo: {
-        prefix: "",
-        firstName: "",
-        lastName: "",
-        housenumber: "",
-        moo: "",
-        tambon: "",
-        district: "",
-        city: "",
-        relationship: ""
+        prefix1: this.value.prefix1,
+        firstName1: this.value.firstName1,
+        lastName1: this.value.lastName1,
+        housenumber1: this.value.housenumber1,
+        moo1: this.value.moo1,
+        tambon1: this.value.tambon1,
+        district1: this.value.district1,
+        city1: this.value.city1,
+        relationship1: this.value.relationship1
       },
-      cityList: [
+      city1List: [
         { id: 1, name: "กระบี่" },
         { id: 2, name: "กรุงเทพมหานคร" },
         { id: 3, name: "กาญจนบุรี" },
@@ -160,6 +161,21 @@ export default {
         { id: 77, name: "อุบลราชธานี" }
       ]
     };
+  },
+   methods: {
+    fireChanges() {
+      this.$emit("input", {
+        prefix1: this.emergencyInfo.prefix1,
+        firstName1: this.emergencyInfo.firstName1,
+        lastName1: this.emergencyInfo.lastName1,
+        housenumber1: this.emergencyInfo.housenumber1,
+        moo1: this.emergencyInfo.moo1,
+        tambon1: this.emergencyInfo.tambon1,
+        district1: this.emergencyInfo.district1,
+        city1: this.emergencyInfo.city1,
+        relationship1: this.emergencyInfo.relationship1
+      });
+    }
   }
 };
 </script>
