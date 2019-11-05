@@ -51,6 +51,29 @@
     </b-field>
 
     <b-field grouped>
+      <b-field label="โทรศัพท์" expanded type="is-danger" > 
+        
+        <b-input @input="fireChanges" v-model="emergencyInfo.phone" ></b-input>
+      </b-field>
+      <b-field label="อีเมล์" expanded >
+        <b-input @input="fireChanges" v-model="emergencyInfo.email"></b-input>
+      </b-field>
+    </b-field>
+
+    <b-field grouped>
+        <b-message type="is-danger" has-icon v-if="!$v.emergencyInfo.phone.required">กรุณากรอกเบอร์โทรศัพท์</b-message>
+        <b-message type="is-danger" has-icon v-if="!$v.emergencyInfo.phone.numeric">เบอร์โทรต้องเป็นตัวเลข</b-message>
+        <b-message type="is-danger" has-icon v-if="!$v.emergencyInfo.email.email">กรอกอีเมล์เท่านั้น</b-message>
+    </b-field>
+      
+      
+    <b-field ><h5>Require phone: {{ $v.emergencyInfo.phone.required }}</h5></b-field>
+    <b-field ><h5>phone numeric: {{ $v.emergencyInfo.phone.numeric}}</h5></b-field>
+    <b-field><h5>email : {{ $v.emergencyInfo.email.email}}</h5></b-field>
+
+
+
+    <b-field grouped>
       <b-field label="ผู้ติดต่อได้เกี่ยวข้องเป็น" expanded>
         <b-radio @input="fireChanges" v-model="emergencyInfo.relationship1" native-value="บิดา">บิดา</b-radio>
         <b-radio @input="fireChanges" v-model="emergencyInfo.relationship1" native-value="มารดา">มารดา</b-radio>
@@ -66,6 +89,8 @@
 
 
 <script>
+import { required, numeric, email} from "vuelidate/lib/validators";
+
 export default {
   props: ["value"],
   data: function() {
@@ -163,6 +188,13 @@ export default {
     };
   },
    methods: {
+    touch() {
+      this.$v.patientInfo.$touch();
+    },
+    reset() {
+      this.$v.patientInfo.$reset();
+    },
+
     fireChanges() {
       this.$emit("input", {
         prefix1: this.emergencyInfo.prefix1,
@@ -175,6 +207,19 @@ export default {
         city1: this.emergencyInfo.city1,
         relationship1: this.emergencyInfo.relationship1
       });
+    }
+  },
+
+  validations: {
+    emergencyInfo: {
+      phone: {
+        required,
+        numeric 
+      },
+      email: {
+        email,
+        required 
+      }
     }
   }
 };

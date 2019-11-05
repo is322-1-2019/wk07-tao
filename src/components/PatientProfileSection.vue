@@ -1,13 +1,17 @@
 <template>
   <section>
-    <b-field
-      label="เลขที่บัตรประจำตัวประชาชน : "
-      expanded
-      type="is-danger"
-      message="(ใส่เฉพาะตัวเลข 0-9 เท่านั้น)"
-    >
-      <b-input @input="fireChanges" v-model="patientInfo.IDcard"></b-input>
+    <b-field label="เลขที่บัตรประจำตัวประชาชน : " expanded type="is-danger" >
+      <b-input @input="fireChanges" v-model="patientInfo.IDcard" maxlength="13"></b-input>
     </b-field>
+    
+      <b-field grouped>
+        <b-message type="is-danger" has-icon v-if="!$v.patientInfo.IDcard.required">กรุณากรอกบัตรประจำตัวประชาชน</b-message>
+        <b-message type="is-danger" has-icon v-if="!$v.patientInfo.IDcard.numeric">บัตรประชาชนต้องเป็นตัวเลข 13 หลัก</b-message>
+      </b-field>
+      
+      <b-field><h5>Require IDcard: {{ $v.patientInfo.IDcard.required }}</h5></b-field >
+      <b-field ><h5>IDcard numeric 13: {{ $v.patientInfo.IDcard.numeric}}</h5></b-field>
+    
 
     <b-field grouped>
       <b-field label="คำนำหน้า">
@@ -25,17 +29,17 @@
       </b-field>
 
       <b-field label="ชื่อ" expanded>
-        <b-input  @input="fireChanges" v-model="patientInfo.firstName"></b-input>
+        <b-input @input="fireChanges" v-model="patientInfo.firstName"></b-input>
       </b-field>
 
       <b-field label="นามสกุล" expanded>
-        <b-input  @input="fireChanges" v-model="patientInfo.lastName"></b-input>
+        <b-input @input="fireChanges" v-model="patientInfo.lastName"></b-input>
       </b-field>
     </b-field>
 
     <b-field grouped>
-      <b-field label="วัน/เดือน/ปีเกิด" expanded >
-        <b-datepicker 
+      <b-field label="วัน/เดือน/ปีเกิด" expanded>
+        <b-datepicker
           @input="fireChanges"
           v-model="patientInfo.birthday"
           placeholder="คลิกเลือก"
@@ -44,7 +48,7 @@
         ></b-datepicker>
       </b-field>
 
-      <b-field label="ศาสนา" expanded >
+      <b-field label="ศาสนา" expanded>
         <b-select @input="fireChanges" v-model="patientInfo.religious">
           <option>พุทธ</option>
           <option>อิสลาม</option>
@@ -56,12 +60,22 @@
         </b-select>
       </b-field>
 
-      <b-field label="สัญชาติ" expanded >
-        <b-input @input="fireChanges" v-model="patientInfo.nationality" placeholder="สัญชาติ" rounded></b-input>
+      <b-field label="สัญชาติ" expanded>
+        <b-input
+          @input="fireChanges"
+          v-model="patientInfo.nationality"
+          placeholder="สัญชาติ"
+          rounded
+        ></b-input>
       </b-field>
 
-      <b-field label="เชื้อชาติ" expanded >
-        <b-input @input="fireChanges" v-model="patientInfo.ethnicity" placeholder="เชื้อชาติ" rounded></b-input>
+      <b-field label="เชื้อชาติ" expanded>
+        <b-input
+          @input="fireChanges"
+          v-model="patientInfo.ethnicity"
+          placeholder="เชื้อชาติ"
+          rounded
+        ></b-input>
       </b-field>
     </b-field>
 
@@ -79,47 +93,51 @@
     <b-field grouped>
       <b-field label="สถานภาพ" expanded>
         <b-radio @input="fireChanges" v-model="patientInfo.status" native-value="โสด">โสด</b-radio>
-        <b-radio @input="fireChanges"  v-model="patientInfo.status" native-value="สมรส">สมรส</b-radio>
-        <b-radio @input="fireChanges"  v-model="patientInfo.status" native-value="หย่า">หย่า</b-radio>
-        <b-radio @input="fireChanges"  v-model="patientInfo.status" native-value="แยกกันอยู่">แยกกันอยู่</b-radio>
-        <b-radio @input="fireChanges"  v-model="patientInfo.status" native-value="หม้าย">หม้าย</b-radio>
-        <b-radio @input="fireChanges"  v-model="patientInfo.status" native-value="นักบวช">นักบวช</b-radio>
+        <b-radio @input="fireChanges" v-model="patientInfo.status" native-value="สมรส">สมรส</b-radio>
+        <b-radio @input="fireChanges" v-model="patientInfo.status" native-value="หย่า">หย่า</b-radio>
+        <b-radio
+          @input="fireChanges"
+          v-model="patientInfo.status"
+          native-value="แยกกันอยู่"
+        >แยกกันอยู่</b-radio>
+        <b-radio @input="fireChanges" v-model="patientInfo.status" native-value="หม้าย">หม้าย</b-radio>
+        <b-radio @input="fireChanges" v-model="patientInfo.status" native-value="นักบวช">นักบวช</b-radio>
       </b-field>
     </b-field>
 
     <b-field grouped>
-      <b-field label="หมู่เลือด" expanded> 
-        <b-radio  @input="fireChanges"  v-model="patientInfo.bloodgroup" native-value="A">A</b-radio>
-        <b-radio  @input="fireChanges" v-model="patientInfo.bloodgroup" native-value="B">B</b-radio>
-        <b-radio  @input="fireChanges" v-model="patientInfo.bloodgroup" native-value="O">O</b-radio>
-        <b-radio  @input="fireChanges" v-model="patientInfo.bloodgroup" native-value="AB">AB</b-radio>
-        <b-radio  @input="fireChanges" v-model="patientInfo.bloodgroup" native-value="อื่นๆ">อื่นๆ</b-radio>
+      <b-field label="หมู่เลือด" expanded>
+        <b-radio @input="fireChanges" v-model="patientInfo.bloodgroup" native-value="A">A</b-radio>
+        <b-radio @input="fireChanges" v-model="patientInfo.bloodgroup" native-value="B">B</b-radio>
+        <b-radio @input="fireChanges" v-model="patientInfo.bloodgroup" native-value="O">O</b-radio>
+        <b-radio @input="fireChanges" v-model="patientInfo.bloodgroup" native-value="AB">AB</b-radio>
+        <b-radio @input="fireChanges" v-model="patientInfo.bloodgroup" native-value="อื่นๆ">อื่นๆ</b-radio>
       </b-field>
     </b-field>
 
     <b-field grouped>
       <b-field label="อาการเบื้องต้น" expanded>
-        <b-input  @input="fireChanges" v-model="patientInfo.symptoms"></b-input>
+        <b-input @input="fireChanges" v-model="patientInfo.symptoms"></b-input>
       </b-field>
     </b-field>
 
     <b-field grouped>
       <b-field label="บ้านเลขที่" expanded>
-        <b-input  @input="fireChanges" v-model="patientInfo.housenumber"></b-input>
+        <b-input @input="fireChanges" v-model="patientInfo.housenumber"></b-input>
       </b-field>
       <b-field label="หมู่" expanded>
-        <b-input  @input="fireChanges" v-model="patientInfo.moo"></b-input>
+        <b-input @input="fireChanges" v-model="patientInfo.moo"></b-input>
       </b-field>
-    
+
       <b-field label="ตำบล" expanded>
-        <b-input  @input="fireChanges" v-model="patientInfo.tambon"></b-input>
+        <b-input @input="fireChanges" v-model="patientInfo.tambon"></b-input>
       </b-field>
       <b-field label="อำเภอ" expanded>
-        <b-input  @input="fireChanges" v-model="patientInfo.district"></b-input>
+        <b-input @input="fireChanges" v-model="patientInfo.district"></b-input>
       </b-field>
 
       <b-field label="จังหวัด" expanded>
-        <b-select  @input="fireChanges" v-model="patientInfo.city" placeholder="โปรดเลือก">
+        <b-select @input="fireChanges" v-model="patientInfo.city" placeholder="โปรดเลือก">
           <option
             v-for="city in cityList "
             v-bind:key="city.id"
@@ -130,42 +148,54 @@
     </b-field>
 
     <b-field grouped>
-      <b-field label="โทรศัพท์" expanded type="is-danger" message="(ใส่เฉพาะตัวเลข 0-9 เท่านั้น)">
-        <b-input  @input="fireChanges" v-model="patientInfo.phone"></b-input>
+      <b-field label="โทรศัพท์" expanded type="is-danger" > 
+        
+        <b-input @input="fireChanges" v-model="patientInfo.phone" ></b-input>
       </b-field>
-      <b-field label="อีเมล์" expanded>
-        <b-input  @input="fireChanges" v-model="patientInfo.email"></b-input>
+      <b-field label="อีเมล์" expanded >
+        <b-input @input="fireChanges" v-model="patientInfo.email"></b-input>
       </b-field>
     </b-field>
 
     <b-field grouped>
+        <b-message type="is-danger" has-icon v-if="!$v.patientInfo.phone.required">กรุณากรอกเบอร์โทรศัพท์</b-message>
+        <b-message type="is-danger" has-icon v-if="!$v.patientInfo.phone.numeric">เบอร์โทรต้องเป็นตัวเลข</b-message>
+        <b-message type="is-danger" has-icon v-if="!$v.patientInfo.email.email">กรอกอีเมล์เท่านั้น</b-message>
+    </b-field>
+      
+      
+      <b-field ><h5>Require phone: {{ $v.patientInfo.phone.required }}</h5></b-field>
+      <b-field ><h5>phone numeric: {{ $v.patientInfo.phone.numeric}}</h5></b-field>
+      <b-field><h5>email : {{ $v.patientInfo.email.email}}</h5></b-field>
+    
+
+     <b-field grouped>
       <b-field label="ชื่อบิดา" expanded>
-        <b-input  @input="fireChanges" v-model="patientInfo.fatherfirstName"></b-input>
+        <b-input @input="fireChanges" v-model="patientInfo.fatherfirstName"></b-input>
       </b-field>
 
       <b-field label="นามสกุลบิดา" expanded>
-        <b-input  @input="fireChanges" v-model="patientInfo.fatherlastName"></b-input>
+        <b-input @input="fireChanges" v-model="patientInfo.fatherlastName"></b-input>
       </b-field>
     </b-field>
 
     <b-field grouped>
       <b-field label="ชื่อมารดา" expanded>
-        <b-input  @input="fireChanges" v-model="patientInfo.motherfirstName"></b-input>
+        <b-input @input="fireChanges" v-model="patientInfo.motherfirstName"></b-input>
       </b-field>
 
       <b-field label="นามสกุลมารดา" expanded>
-        <b-input  @input="fireChanges" v-model="patientInfo.motherlastName"></b-input>
+        <b-input @input="fireChanges" v-model="patientInfo.motherlastName"></b-input>
       </b-field>
     </b-field>
-
-    
   </section>
 </template>
 
 <script>
+import { required, between, numeric, email} from "vuelidate/lib/validators";
 export default {
   props: ["value"],
-  data: function(){
+  data: function() {
     return {
       patientInfo: {
         IDcard: this.value.IDcard,
@@ -276,6 +306,12 @@ export default {
     };
   },
   methods: {
+    touch() {
+      this.$v.patientInfo.$touch();
+    },
+    reset() {
+      this.$v.patientInfo.$reset();
+    },
     fireChanges() {
       this.$emit("input", {
         IDcard: this.patientInfo.IDcard,
@@ -304,7 +340,33 @@ export default {
         city: this.patientInfo.city
       });
     }
+  },
+  validations: {
+    patientInfo: {
+      IDcard: {
+        required,
+        between, numeric 
+      },
+      phone: {
+        required,
+        numeric 
+      },
+      email: {
+        email,
+        required 
+      }
+    }
   }
-  
 };
 </script>
+
+<style>
+
+h5 {
+  color: green;
+  
+  font-size: 1px;
+}
+
+
+</style>

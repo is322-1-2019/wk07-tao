@@ -27,6 +27,8 @@ export default {
 
   },
   methods: {
+    
+
     fireChanges() {
       this.$emit("input", {
         allergyStatus: this.radioButton.allergyStatus

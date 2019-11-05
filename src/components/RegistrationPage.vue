@@ -27,6 +27,7 @@
     <p>{{PatientPS}}</p><br>
     <p>{{EmergCS}}</p><br>
     <p>{{Allergy}}</p>
+    
   </div>
 </template>
 
@@ -35,6 +36,7 @@ import PatientProfileSection from "./PatientProfileSection.vue";
 import EmergencyContactSection from "./EmergencyContactSection.vue";
 import AllergyInfoSection from "./AllergyInfoSection.vue";
 import ConfirmSection from "./ConfirmSection.vue";
+
 
 export default {
   components: {
@@ -95,19 +97,23 @@ export default {
 
 <style>
 body {
-  background-color: lightblue;
+  background-color: plum;
+  border: 10px dotted white;
+  padding: 15px;
 }
 
 h1 {
   color: darkblue;
   text-align: center;
-  font-size: 30px;
+  font-size: 10px;
 }
 
 p {
   color: blue;
   font-size: 20px;
 }
+
+
 </style>
 
 
